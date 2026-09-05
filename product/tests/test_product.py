@@ -1,6 +1,7 @@
 from django.test import TestCase
 
 from product.factories import CategoryFactory, ProductFactory
+from product.models import category
 from product.serializers.product_serializer import ProductSerializer
 
 
@@ -13,23 +14,18 @@ class ProductSerializerTestCase(TestCase):
 
         self.assertEqual(
             set(serializer.data.keys()),
-            {"title", "description", "price", "active", "category"}
+            {"id","title", "description", "price", "active", "category"}
         )
 
     def test_product_serializer_valid_data(self):
+        category = CategoryFactory()
+
         data = {
-        "title": "Livro Python",
-        "description": "Livro sobre Python",
-        "price": 100,
-        "active": True,
-        "category": [
-            {
-                "title": "Programação",
-                "slug": "programacao",
-                "description": "Livros de programação",
-                "active": True,
-            }
-        ],
+            "title": "Livro Python",
+            "description": "Livro sobre Python",
+            "price": 100,
+            "active": True,
+            "categories_id": [category.id],
     }
 
         serializer = ProductSerializer(data=data)
@@ -37,7 +33,6 @@ class ProductSerializerTestCase(TestCase):
         is_valid = serializer.is_valid()
 
         self.assertTrue(is_valid)
-
 
     def test_product_serializer_required_fields(self):
         data = {

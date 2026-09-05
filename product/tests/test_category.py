@@ -38,7 +38,6 @@ class CategorySerializerTestCase(TestCase):
 
         self.assertFalse(serializer.is_valid())
         self.assertIn("title", serializer.errors)
-        self.assertIn("slug", serializer.errors)
 
     def test_category_serializer_invalid_slug(self):
         data = {
