@@ -14,7 +14,7 @@ class OrderSerializerTestCase(TestCase):
 
         self.assertEqual(
             set(serializer.data.keys()),
-            {"product", "total"}
+            {"product", "total", "user"}
         )
 
     def test_order_serializer_products_relationship(self):
