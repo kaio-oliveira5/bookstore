@@ -14,7 +14,7 @@ class ProductSerializerTestCase(TestCase):
 
         self.assertEqual(
             set(serializer.data.keys()),
-            {"id","title", "description", "price", "active", "category"}
+            {"id", "title", "description", "price", "active", "category"},
         )
 
     def test_product_serializer_valid_data(self):
@@ -26,7 +26,7 @@ class ProductSerializerTestCase(TestCase):
             "price": 100,
             "active": True,
             "categories_id": [category.id],
-    }
+        }
 
         serializer = ProductSerializer(data=data)
 
@@ -47,7 +47,6 @@ class ProductSerializerTestCase(TestCase):
         self.assertFalse(serializer.is_valid())
         self.assertIn("title", serializer.errors)
 
-
     def test_product_serializer_category_relationship(self):
         category = CategoryFactory()
         product = ProductFactory()
@@ -58,15 +57,9 @@ class ProductSerializerTestCase(TestCase):
 
         self.assertEqual(len(serializer.data["category"]), 1)
 
-        self.assertEqual(
-            serializer.data["category"][0]["title"],
-            category.title
-        )
+        self.assertEqual(serializer.data["category"][0]["title"], category.title)
 
-        self.assertEqual(
-            serializer.data["category"][0]["slug"],
-            category.slug
-        )
+        self.assertEqual(serializer.data["category"][0]["slug"], category.slug)
 
     def test_product_serializer_invalid_price(self):
         data = {

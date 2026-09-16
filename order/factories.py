@@ -5,15 +5,17 @@ from product.factories import ProductFactory
 
 from order.models import Order
 
+
 class UserFactory(factory.django.DjangoModelFactory):
-    email = factory.Faker('pystr')
-    username = factory.Faker('pystr')
+    email = factory.Faker("pystr")
+    username = factory.Faker("pystr")
 
     class Meta:
         model = User
 
+
 class OrderFactory(factory.django.DjangoModelFactory):
-    user =factory.SubFactory(UserFactory)
+    user = factory.SubFactory(UserFactory)
 
     @factory.post_generation
     def product(self, create, extracted, **kwargs):
