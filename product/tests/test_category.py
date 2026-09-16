@@ -12,8 +12,7 @@ class CategorySerializerTestCase(TestCase):
         serializer = CategorySerializer(category)
 
         self.assertEqual(
-            set(serializer.data.keys()),
-            {"title", "slug", "description", "active"}
+            set(serializer.data.keys()), {"title", "slug", "description", "active"}
         )
 
     def test_category_serializer_valid_data(self):

@@ -12,10 +12,7 @@ class OrderSerializerTestCase(TestCase):
 
         serializer = OrderSerializer(order)
 
-        self.assertEqual(
-            set(serializer.data.keys()),
-            {"product", "total", "user"}
-        )
+        self.assertEqual(set(serializer.data.keys()), {"product", "total", "user"})
 
     def test_order_serializer_products_relationship(self):
         product = ProductFactory()
@@ -27,10 +24,7 @@ class OrderSerializerTestCase(TestCase):
 
         self.assertEqual(len(serializer.data["product"]), 1)
 
-        self.assertEqual(
-            serializer.data["product"][0]["title"],
-            product.title
-        )
+        self.assertEqual(serializer.data["product"][0]["title"], product.title)
 
     def test_order_serializer_total(self):
         product_1 = ProductFactory(price=100)
@@ -51,11 +45,7 @@ class OrderSerializerTestCase(TestCase):
 
         order = OrderFactory()
 
-        order.product.add(
-            product_1,
-            product_2,
-            product_3
-        )
+        order.product.add(product_1, product_2, product_3)
 
         serializer = OrderSerializer(order)
 

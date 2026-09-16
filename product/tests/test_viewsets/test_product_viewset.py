@@ -16,7 +16,7 @@ class TestProductViewSet(APITestCase):
 
     def setUp(self):
         self.user = UserFactory()
-        token = Token.objects.create(user=self.user) #added
+        token = Token.objects.create(user=self.user)  # added
         token.save()
 
         self.product = ProductFactory(
@@ -25,12 +25,10 @@ class TestProductViewSet(APITestCase):
         )
 
     def test_get_all_products(self):
-        token = Token.objects.get(user=self.user) #added
-        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key) #added
+        token = Token.objects.get(user=self.user)  # added
+        self.client.credentials(HTTP_AUTHORIZATION="Token " + token.key)  # added
 
-        response = self.client.get(
-            reverse("product-list", kwargs={"version": "v1"})
-        )
+        response = self.client.get(reverse("product-list", kwargs={"version": "v1"}))
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
@@ -42,16 +40,10 @@ class TestProductViewSet(APITestCase):
 
     def test_get_product(self):
         token = Token.objects.get(user=self.user)
-        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        self.client.credentials(HTTP_AUTHORIZATION="Token " + token.key)
 
         response = self.client.get(
-            reverse(
-                "product-detail",
-                kwargs={
-                    "version": "v1",
-                    "pk": self.product.id
-                }
-            )
+            reverse("product-detail", kwargs={"version": "v1", "pk": self.product.id})
         )
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -64,20 +56,18 @@ class TestProductViewSet(APITestCase):
 
     def test_create_product(self):
         token = Token.objects.get(user__username=self.user.username)
-        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        self.client.credentials(HTTP_AUTHORIZATION="Token " + token.key)
 
         category = CategoryFactory()
 
-        data = json.dumps({
-            "title": "notebook",
-            "price": 800.00,
-            "categories_id": [category.id]
-        })
+        data = json.dumps(
+            {"title": "notebook", "price": 800.00, "categories_id": [category.id]}
+        )
 
         response = self.client.post(
             reverse("product-list", kwargs={"version": "v1"}),
             data=data,
-            content_type="application/json"
+            content_type="application/json",
         )
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
@@ -89,23 +79,12 @@ class TestProductViewSet(APITestCase):
 
     def test_delete_product(self):
         token = Token.objects.get(user=self.user)
-        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        self.client.credentials(HTTP_AUTHORIZATION="Token " + token.key)
 
         response = self.client.delete(
-            reverse(
-                "product-detail",
-                kwargs={
-                    "version": "v1",
-                    "pk": self.product.id
-                }
-            )
+            reverse("product-detail", kwargs={"version": "v1", "pk": self.product.id})
         )
 
-        self.assertEqual(
-            response.status_code,
-            status.HTTP_204_NO_CONTENT
-        )
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
-        self.assertFalse(
-            Product.objects.filter(id=self.product.id).exists()
-        )
+        self.assertFalse(Product.objects.filter(id=self.product.id).exists())
