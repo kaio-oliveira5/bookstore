@@ -4,6 +4,11 @@ on: [push]
 
 jobs:
   build:
+    env:
+      SECRET_KEY: foo
+      DEBUG: "1"
+      DJANGO_ALLOWED_HOSTS: "localhost 127.0.0.1 [::1]"
+
     strategy:
       fail-fast: false
       matrix:
