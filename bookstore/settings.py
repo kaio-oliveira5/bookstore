@@ -20,13 +20,20 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-^+f3jxv&3$lib5km80z9os*cxf&dzd1)8p)ypi2itnr^r6pp_f"
+# Secret key
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# Debug
+DEBUG = int(os.environ.get("DEBUG", default=0))
 
-ALLOWED_HOSTS = []
+# Allowed hosts
+ALLOWED_HOSTS = os.environ.get(
+    "DJANGO_ALLOWED_HOSTS",
+    os.environ.get(
+        "RENDER_EXTERNAL_HOSTNAME",
+        "localhost 127.0.0.1"
+    )
+).split()
 
 
 # Application definition
@@ -82,8 +89,14 @@ WSGI_APPLICATION = "bookstore.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
-        "NAME": os.environ.get("SQL_DATABASE", BASE_DIR / "db.sqlite3"),
+        "ENGINE": os.environ.get(
+            "SQL_ENGINE",
+            "django.db.backends.sqlite3"
+        ),
+        "NAME": os.environ.get(
+            "SQL_DATABASE",
+            BASE_DIR / "db.sqlite3"
+        ),
         "USER": os.environ.get("SQL_USER", "user"),
         "PASSWORD": os.environ.get("SQL_PASSWORD", "password"),
         "HOST": os.environ.get("SQL_HOST", "localhost"),
@@ -123,7 +136,7 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
+# Static files
 # https://docs.djangoproject.com/en/6.1/howto/static-files/
 
 STATIC_URL = "static/"
@@ -138,6 +151,9 @@ MAILERS = {
     },
 }
 
+
+# Django REST Framework
+
 REST_FRAMEWORK = {
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE": 5,
@@ -148,14 +164,9 @@ REST_FRAMEWORK = {
     ],
 }
 
+
+# Django Debug Toolbar
+
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
-
-SECRET_KEY = os.environ.get("SECRET_KEY")
-
-DEBUG = int(os.environ.get("DEBUG", default=0))
-
-# "DJANGO_ALLOWED_HOSTS" should be a sigle string of hosts with a space between each.
-# For ecample: "DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]"
-ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")

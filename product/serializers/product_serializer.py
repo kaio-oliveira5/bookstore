@@ -29,4 +29,4 @@ class ProductSerializer(serializers.ModelSerializer):
         for category in categories_data:
             product.category.add(category)
 
-            return product
+        return product
