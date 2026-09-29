@@ -1,0 +1,58 @@
+{% load static %}
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Bookstore API</title>
+
+    <link rel="stylesheet" href="{% static 'css/home.css' %}" />
+  </head>
+
+  <body>
+    <main class="container">
+      <header class="hero">
+        <span class="badge">Django REST Framework</span>
+
+        <h1>📚 Bookstore API</h1>
+
+        <p>
+          API REST desenvolvida com Django, Django REST Framework e PostgreSQL.
+        </p>
+      </header>
+
+      <section class="links">
+        <a href="/bookstore/v1/product/" class="card">
+          <span>📦</span>
+          <h2>Products</h2>
+          <p>Consulte os produtos disponíveis na API.</p>
+        </a>
+
+        <a href="/bookstore/v1/category/" class="card">
+          <span>🏷️</span>
+          <h2>Categories</h2>
+          <p>Consulte as categorias cadastradas.</p>
+        </a>
+
+        <a href="/bookstore/v1/orders/" class="card">
+          <span>🛒</span>
+          <h2>Orders</h2>
+          <p>Acesse os pedidos da aplicação.</p>
+        </a>
+
+        <a href="/admin/" class="card">
+          <span>⚙️</span>
+          <h2>Admin</h2>
+          <p>Acesse o painel administrativo do Django.</p>
+        </a>
+      </section>
+
+      <footer>
+        <br>Bookstore API • Desenvolvido por Kaio Oliveira </br>
+            Django REST Framework • PostgrenSQL • CI/CD</p>
+      </footer>
+    </main>
+  </body>
+</html>
